@@ -1,7 +1,5 @@
-'''#################################
-Michael Greene 4766783 gree1886
-Needleman-Wunsch implementation
-#################################'''
+#Michael Greene
+#Needleman-Wunsch for global sequence alignment
 
 import sys
 import pandas as pd
@@ -184,7 +182,7 @@ def permute_and_graph(ref, query):
 
 
 if __name__ == '__main__':
-	#invoke this program as python HW2.py <reference> <query> [<match>] [<perform permutations>]
+	#invoke this program as python SequenceAlignment.py <reference> <query> [<match>]
 	#sys.argv[0] = script name
 	reffile = sys.argv[1]
 	queryfile = sys.argv[2]
