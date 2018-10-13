@@ -15,7 +15,7 @@ _cgap = -2
 def init_scoring_matrix(reflen, qlen):
     #initalize with zeros
     #horizontal: reference; vertical: query
-    scoreMat = np.zeros((qlen+1, reflen+1)) #extra row & col for initial gaps
+    scoreMat = np.zeros(qlen+1, reflen+1) #extra row & col for initial gaps
     
     #add initial gap penalties
     for i in range(1, reflen+1):
