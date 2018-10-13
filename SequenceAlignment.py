@@ -15,7 +15,8 @@ _cgap = -2
 def init_scoring_matrix(reflen, qlen):
     #initalize with zeros
     #horizontal: reference; vertical: query
-    scoreMat = np.zeros(qlen+1, reflen+1) #extra row & col for initial gaps
+    scoreMat = np.zeros((qlen+1, reflen+1)) #extra row & col for initial gaps
+    #side note, input to np.zeros() must be a tuple, hence the extra parens
     
     #add initial gap penalties
     for i in range(1, reflen+1):
@@ -31,7 +32,6 @@ def needleman_wunsch(ref, query):
     reflen = len(ref)
     qlen = len(query)
     
-    #initialize the scoring matrix
     scoreMat = init_scoring_matrix(reflen, qlen)
     
     #horizontal: reference; vertical: query- important for interpreting penalties
@@ -113,7 +113,7 @@ def anchored_needleman_wunsch(ref, query, match=None):
     #if not anchored, do regular needleman-wunsch
     if match is None:
         print("Beginning Needleman-Wunsch without anchoring, either match file unspecified or failed to open")
-        return(needleman_wunsch(ref, query))
+        return needleman_wunsch(ref, query)
 
     print("Beginning anchored Needleman-Wunsch")
     roffset = 0 #keeps track of the offset in the human sequence
@@ -176,6 +176,7 @@ def permute_and_graph(ref, query):
     figure = plt.figure()
     plt.hist(scores, bins=100)
     plt.axvline(scores[0], linestyle="dashed", label="unpermuted score") #add a vertical line to show the unpermuted score
+    plt.title("AlignmentScoreHistogram.pdf")
     plt.xlabel("alignment score")
     plt.ylabel("frequency")
     plt.legend()
@@ -187,7 +188,7 @@ def file_to_sequence(filename):
     try: return str(pd.read_csv(filename).values.flatten()).strip("[] '").replace("'\n '", "")
     except: print("\nFailed to open file {}\n".format(filename))
     #note to self: str.strip(input) only works on the beginning and end of the string but removes any of the chars in input from the string
-    #   in contrast, replace(str1, str2) maps over the entire string but only replaces a match to all of str1
+    #   in contrast, replace(str1, str2) maps over the entire string but only replaces a complete match to str1
 
 def process_titin_match(matchfile):
     titin_df = pd.read_csv("TITIN_Match.txt", header=None).values
@@ -217,7 +218,7 @@ if __name__ == '__main__':
     outfile.write("\nAlignment score: " + str(alignment[2]))
     outfile.close() #if performing permutations times out (it takes a while to perform) then output from NW will still be output to text
 
-    if input("Permute and graph? type Y/N: ") == "Y": permute_and_graph(refstr, querystr)
+    if input("Permute and graph? Y/N: ").lower() == "y": permute_and_graph(refstr, querystr)
 
     print("Execution finished successfully")
 
