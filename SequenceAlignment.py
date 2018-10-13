@@ -109,11 +109,13 @@ def needleman_wunsch(ref, query):
 
 #assume match is a 2d array size n*4
 def anchored_needleman_wunsch(ref, query, match=None):
-    print("beginning initial alignment")
 
     #if not anchored, do regular needleman-wunsch
-    if type(match) == None: return(needleman_wunsch(ref, query))
+    if match is None:
+        print("Beginning Needleman-Wunsch without anchoring, either match file unspecified or failed to open")
+        return(needleman_wunsch(ref, query))
 
+    print("Beginning anchored Needleman-Wunsch")
     roffset = 0 #keeps track of the offset in the human sequence
     qoffset = 0 #how much of the fly sequence has been processed
 
@@ -181,28 +183,30 @@ def permute_and_graph(ref, query):
     figure.savefig("AlignmentScoreHistogram.pdf")
 
 
+def file_to_sequence(filename):
+    try: return str(pd.read_csv(filename).values.flatten()).strip("[] '").replace("'\n '", "")
+    except: print("\nFailed to open file {}\n".format(filename))
+    #note to self: str.strip(input) only works on the beginning and end of the string but removes any of the chars in input from the string
+    #   in contrast, replace(str1, str2) maps over the entire string but only replaces a match to all of str1
+
+def process_titin_match(matchfile):
+    titin_df = pd.read_csv("TITIN_Match.txt", header=None).values
+    titin_map = map(lambda group:
+                    np.fromstring(group[0], dtype=int, sep='\t'), titin_df)
+    return np.array(list(titin_map))
+
 if __name__ == '__main__':
     #invoke this program as python SequenceAlignment.py <reference> <query> [<match>]
     #sys.argv[0] is the script name (SequenceAlignment.py)
-    reffile = sys.argv[1]
-    queryfile = sys.argv[2]
-    matchfile = None if len(sys.argv) <= 3 else sys.argv[3]
-        
+    refstr = file_to_sequence(sys.argv[1])
+    querystr = file_to_sequence(sys.argv[2])
+    
     try:
-        refstr = str(pd.read_csv(reffile).values[0]) #values returns an array of data entries, index 0 to get the (presumed) only entry
-        print(type(refstr))
-    except: print("\nfailed to open reference file\n")
-        
-
-    try:
-        querystr = str(pd.read_csv(queryfile).values[0])
-        print(type(querystr))
-    except: print("\nfailed to open query file\n")
-
-    try:
-        matchv = pd.read_csv(matchfile).values
-    except: #exception caught when match file is not supplied (equals null)
-        matchv = None
+        matchfile = sys.argv[3]
+        if matchfile != "TITIN_Match.txt": matchv = pd.read_csv(matchfile).values
+        else: matchv = process_titin_match(matchfile) #not ideal but I didnt make this file and the format is different
+    except:
+        matchv = None #exception caught when match file is not supplied or doesnt exist
 
     #alignment = anchored_needleman_wunsch(refstr, querystr, matchv)
     alignment = anchored_needleman_wunsch(refstr, querystr, matchv)
