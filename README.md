@@ -1,11 +1,11 @@
 # Project contents:
-	+ Python source code
-	+ Sample input .txt files (sequence and match file samples) to show required format
-	+ Sample output .txt and .pdf files (produced from running the program on the sample files)
-	+ FASTA files for human and mouse TITIN protein sequences (TITIN is the largest known protein, ~30,000 amino acids in length)
-	+ Match file for the TITIN sequences
-	+ Output for aligning human and mouse TITIN sequences
-	+ This...
+	* Python source code
+	* Sample input .txt files (sequence and match file samples) to show required format
+	* Sample output .txt and .pdf files (produced from running the program on the sample files)
+	* FASTA files for human and mouse TITIN protein sequences (TITIN is the largest known protein, ~30,000 amino acids in length)
+	* Match file for the TITIN sequences
+	* Output for aligning human and mouse TITIN sequences
+	* This...
 
 # GLOBAL SEQUENCE ALIGNMENT notes:
 The task this accomplishes can be described as inserting gaps into two sequences of DNA/RNA or amino acids such that the resulting strings have an optimal similarity score. This task is important in genomics because the alignment and similarity score of two genes can indicate homologous sequences, suggesting an evolutionary relationship between the organisms each sequence came from. These scores can be further used to contruct phylogenetic trees for entire ecosystems.
