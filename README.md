@@ -25,7 +25,7 @@ Program always outputs a text file 'out.txt' containing the new sequences (with 
 ***********************************************************************************************
 
 ## USAGE:
-python SequenceAlignment.py *name of reference txt file* *query txt file* [*match txt file*]
+python SequenceAlignment.py (name of reference txt file) (query txt file) [*match txt file*]
 
 ***********************************************************************************************
 
