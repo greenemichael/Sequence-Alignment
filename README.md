@@ -8,11 +8,13 @@
 - This...
 
 # GLOBAL SEQUENCE ALIGNMENT notes:
-The task this accomplishes can be described as inserting gaps into two sequences of DNA/RNA or amino acids such that the resulting strings have an optimal similarity score. This task is important in genomics because the alignment and similarity score of two genes can indicate homologous sequences, suggesting an evolutionary relationship between the organisms each sequence came from. These scores can be further used to contruct phylogenetic trees for entire ecosystems.
+The task this accomplishes can be described as inserting gaps into either of two sequences of DNA/RNA or amino acids such that the resulting strings have an optimal similarity score. Imagine aligning two sequences of genes, **ACGAD** and **ACAD**: to perform further meaningful biological analyses, they need to be aligned as **ACGAD** and **AC_AD** because it minimizes mismatches.
+
+This task is important in genomics because the alignment and similarity score of two genes can indicate homologous pairs, suggesting an evolutionary relationship between the organisms each sequence came from. These scores can be further used to contruct phylogenetic trees for entire ecosystems.
 
 To accomplish this task, the Needleman-Wunsch algorithm is implemented, as well as an anchored version. Anchored Needleman-Wunsch assumes some regions ('anchors') are known to match in both sequences, and the algorithm takes as input the start and end positions of each anchor as well as the two sequences to be aligned. The task of sequence alignment then becomes aligning the regions between anchors and building up the final alignment, saving time.
 
-If desired, this program will also permute both sequences, perform alignment & scoring, and repeat 10,000 times. The resulting 10,000 scores are then made into a histogram and saved to a PDF file. This is simply to show that if sequences were randomly aligned, they would still achieve a certain score, but it would score much higher using this algorithm- supporting the claim that the output alignment is (at least) approaching optimal.
+If desired, this program will also permute both sequences, perform alignment & scoring, and repeat 10,000 times. The resulting 10,000 scores are then made into a histogram and saved to a PDF file. This is simply to show that the algorithm is producing an alignment that scores significantly higher than if the alignment was random.
 
 ## INPUT notes:
 To run this program, the sequence files MUST be in the same folder as the program file 'SequenceAlignment.py', files CANNOT be opened by passing their path to the program. Input files must have the same format as the sample input files.
