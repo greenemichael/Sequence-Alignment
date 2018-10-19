@@ -17,7 +17,7 @@ To accomplish this task, the Needleman-Wunsch algorithm is implemented, as well 
 If desired, this program will also permute both sequences, perform alignment & scoring, and repeat 10,000 times. The resulting 10,000 scores are then made into a histogram and saved to a PDF file. This is simply to show that the algorithm is producing an alignment that scores significantly higher than if the alignment was random.
 
 ## INPUT notes:
-To run this program, the sequence files MUST be in the same folder as the program file 'SequenceAlignment.py', files CANNOT be opened by passing their path to the program. Input files must have the same format as the sample input files.
+To run this program, the sequence files MUST be in the same folder as the program file 'SequenceAlignment.py', files CANNOT be opened by passing their path to the program. Input files must have the same format as the sample files. While the included TITIN files will work with this program, **_it is recommended to use the sample format instead of that in the TITIN files._**
 
 ## OUTPUT notes:
 Program always outputs a text file 'out.txt' containing the new sequences (with gaps inserted) and their alignment score. If a match file is passed as well, the program runs anchored Needleman-Wunsch. The program will also ask the user before repeatedly permuting and realigning the sequences, ultimately creating a histogram of alignment scores. If this last step is executed, the output of this process is the file 'AlignmentScoreHistogram.pdf'.
@@ -27,10 +27,12 @@ Program always outputs a text file 'out.txt' containing the new sequences (with 
 ## USAGE:
 python SequenceAlignment.py (name of reference txt file) (query txt file) [*match txt file*]
 
+Square brackets indicate that the match file is optional- anchored Needleman-Wunsch will be run only if this file is supplied.
 ***********************************************************************************************
+Ex: python SequenceAlignment.py TITIN_Human.fa TITIN_Mouse.fa TITIN_Match.txt
 
-Ex: python SequenceAlignment.py SAMPLEInput1.txt SAMPLEInput2.txt SAMPLEMatch.txt
-In this example the SAMPLEInput1 file becomes the reference sequence and SAMPLEInput2 becomes the query. SAMPLEMatch is used to run anchored needleman-wunsch for the two sequences.
+In this example the TITIN_Human becomes the reference sequence and TITIN_Mouse becomes the query. TITIN_Match is used to run anchored needleman-wunsch for the two sequences.
 
-Also acceptable: python SequenceAlignment.py SAMPLEInput1.txt SAMPLEInput.txt
-In this example, the non-anchored needleman-wunsch algorithm will be run for the two given files, with SAMPLEInput1 and SAMPLEInput2 used as reference and query, respectively.
+Also acceptable: python SequenceAlignment.py SAMPLEInput1.txt SAMPLEInput2.txt
+
+This will 
